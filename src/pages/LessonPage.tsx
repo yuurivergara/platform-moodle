@@ -1,5 +1,6 @@
 import { FileArrowDown, CaretRight } from "phosphor-react";
 import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 
 export function LessonPage(){
 
@@ -93,7 +94,7 @@ export function LessonPage(){
       </div>
       
       </div>
-      
+      <Footer />
       </div>
   )
 }

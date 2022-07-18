@@ -1,6 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { Footer } from "../components/Footer";
 import { Logo } from "../components/Logo";
 
 const CREATE_USER = gql`
@@ -69,6 +70,7 @@ export function Home(){
       </div>
       
       <img src="/src/images/group.png" alt=""/>
+      <Footer />
     </div>
   );
 }

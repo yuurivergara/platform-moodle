@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 import { Video } from "../components/Video";
@@ -15,6 +16,7 @@ const {tslug, slug}= useParams<{tslug : string ,slug: string}>()
         { slug ? <Video lessonSlug={slug}/> : <div className="flex-1"/>}
         { tslug ? <Sidebar teacherSlug={tslug}/> : <div className="flex-1"/>}  
       </main>
+      <Footer />
     </div>
     
   )
