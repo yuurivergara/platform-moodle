@@ -1,30 +1,47 @@
 import { gql, useQuery } from "@apollo/client";
 import { Lesson } from "./Lesson";
 import {isPast} from "date-fns"
+import { useParams } from "react-router-dom";
+
 
 const GET_LESSONS_QUERY = gql`
-  query {
-  lessons(orderBy: availableAt_ASC, stage: PUBLISHED) {
+query MyQuery($tslug: String) {
+teacher(where: {tslug: $tslug}) {
+  lessons {
     id
+    slug
     lessonType
     availableAt
+    description
     title
-    slug
-    }
   }
+}
+}
 `
 interface GetLessonsQueryResponse {
-  lessons: {
-    id: string,
-    title: string,
-    slug: string,
-    availableAt: string,
-    lessonType: "live" | "class",
-  }[]
+teacher:{ 
+ lessons: {
+   id: string,
+   title: string,
+   slug: string,
+   availableAt: string,
+   lessonType: "live" | "class",
+ }[]
+}
 }
 
-export function Sidebar() {
-  const {data} = useQuery<GetLessonsQueryResponse>(GET_LESSONS_QUERY)
+interface TeacherProps {
+  teacherSlug : string
+}
+
+export function Sidebar(props: TeacherProps) {
+  
+ 
+  const {data} = useQuery<GetLessonsQueryResponse>(GET_LESSONS_QUERY, {
+    variables: {
+      tslug: props.teacherSlug
+    }
+  })
 
   return (
     <aside className="w-[348px] bg-gray-700 p-6 border-l border-gray-600">
@@ -32,7 +49,7 @@ export function Sidebar() {
         Cronogramaa de aulas
       </span>
       <div className="flex-col gap-8">
-        {data?.lessons.map(lesson => {
+        {data?.teacher.lessons.map(lesson => {
           return (
             <Lesson 
               key={lesson.id}
@@ -40,6 +57,7 @@ export function Sidebar() {
               slug={lesson.slug}
               availableAt={new Date(lesson.availableAt)}
               type={lesson.lessonType}
+              tslug={props.teacherSlug}
             />
           )
         })}

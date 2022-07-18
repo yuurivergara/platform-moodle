@@ -4,15 +4,18 @@ import { Sidebar } from "../components/Sidebar";
 import { Video } from "../components/Video";
 
 export function Moodle(){
-const {slug}= useParams<{slug: string}>()
+const {tslug, slug}= useParams<{tslug : string ,slug: string}>()
+
+
 
   return(
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex flex-1">
         { slug ? <Video lessonSlug={slug}/> : <div className="flex-1"/>}
-        <Sidebar />
+        { tslug ? <Sidebar teacherSlug={tslug}/> : <div className="flex-1"/>}  
       </main>
     </div>
+    
   )
 }

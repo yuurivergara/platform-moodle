@@ -4,14 +4,18 @@ import ptBR from "date-fns/locale/pt-BR"
 import { Link, useParams } from "react-router-dom";
 
 interface LessonProps {
-  title: string;
-  slug: string;
-  availableAt: Date;
+  title: string,
+  slug: string,
+  availableAt: Date,
   type: "live" | "class";
+  tslug: string
 }
+
+
 
 export function Lesson(props: LessonProps) {
   const {slug} = useParams<{slug: string}>()
+  
 
   const isLessonAvailable = isPast(props.availableAt);
   const availableAtDateFormat= format(props.availableAt, "EEEE' • 'd' de 'MMMM' • 'k 'h 'mm' min'",
@@ -19,9 +23,10 @@ export function Lesson(props: LessonProps) {
   )
 
   const isActiveLesson = slug === props.slug;
+  console.log(slug)
   
   return (
-    <Link to={`/moodle/lesson/${props.slug}`} className="group">
+    <Link to={`/lesson/${props.tslug}/${props.slug}`} className="group">
       <span className="text-gray-300">
         {availableAtDateFormat}
       </span>
